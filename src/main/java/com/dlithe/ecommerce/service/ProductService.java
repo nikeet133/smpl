@@ -1,12 +1,16 @@
 package com.dlithe.ecommerce.service;
 
-import com.dlithe.ecommerce.dto.ProductD;
+import com.dlithe.ecommerce.dto.BaseResponse;
+import com.dlithe.ecommerce.dto.ProductDetails;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+
+import java.io.IOException;
 
 @Component
 public interface ProductService {
 
-ProductD getProductDetails(int productId);
+    ResponseEntity<BaseResponse> getProductDetails(int productId) throws IOException;
 
 
 

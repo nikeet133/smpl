@@ -1,10 +1,16 @@
 package com.dlithe.ecommerce.controller;
 
-import com.dlithe.ecommerce.dto.ProductD;
+import com.dlithe.ecommerce.dto.AdminLoginRequest;
+import com.dlithe.ecommerce.dto.BaseResponse;
+import com.dlithe.ecommerce.dto.ProductDetails;
 import com.dlithe.ecommerce.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import java.io.IOException;
 
 @RestController
 public class ProductController {
@@ -19,10 +25,33 @@ public class ProductController {
 //    }
 
     @GetMapping("get-product-details/{productId}")
-    private ProductD fetchProductDetails(@PathVariable int productId){
+    public ResponseEntity<BaseResponse> fetchProductDetails(@PathVariable int productId) throws IOException {
+        if(productId  == 0){
+            BaseResponse baseResponse = new BaseResponse();
+            baseResponse.setMessage("not found");
+            baseResponse.setHttpStatus(HttpStatus.BAD_REQUEST);
+            baseResponse.setHttpStatusCode(HttpStatus.BAD_REQUEST.value());
+            return new ResponseEntity<>(baseResponse, HttpStatus.BAD_REQUEST);
+        }
+
+
         return productService.getProductDetails(productId);
     }
 
+
+//    public ResponseEntity<BaseResponse> adminLogin(@RequestBody AdminLoginRequest adminLoginRequest){
+//        if(adminLoginRequest  == null){
+//            BaseResponse baseResponse = new BaseResponse();
+//            baseResponse.setMessage("not found");
+//            baseResponse.setHttpStatus(HttpStatus.BAD_REQUEST);
+//            baseResponse.setHttpStatusCode(HttpStatus.BAD_REQUEST.value());
+//            return new ResponseEntity<>(baseResponse, HttpStatus.BAD_REQUEST);
+//        }
+//        return adminService.adminLogin(adminLoginRequest);
+//    }
+//
+//    @GetMapping("get-product-details")
+//    public ResponseEntity<BaseResponse> getProductDetail(@RequestBody  ) {
 
 
 

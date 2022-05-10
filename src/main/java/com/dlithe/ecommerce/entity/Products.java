@@ -28,7 +28,7 @@ public class Products {
     @Column(name="price")
     private String price;
 
-    @Column(nullable = true, length = 64)
+    @Column(name="product_image")
     private String image;
 
 }
