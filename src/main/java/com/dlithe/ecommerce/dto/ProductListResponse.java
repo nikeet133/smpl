@@ -5,14 +5,14 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.List;
+
 @Getter
 @Setter
-@EqualsAndHashCode
 @ToString
-public class AdminLoginRequest {
+@EqualsAndHashCode
 
+public class ProductListResponse {
 
-    private String email;
-    private String password;
-
+private List<ProductResponse> productResponses;
 }

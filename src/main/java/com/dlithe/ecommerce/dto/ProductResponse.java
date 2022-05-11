@@ -1,11 +1,9 @@
 package com.dlithe.ecommerce.dto;
 
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-
 
 import java.io.File;
 
@@ -13,14 +11,9 @@ import java.io.File;
 @Setter
 @EqualsAndHashCode
 @ToString
-public class ProductDetails {
+public class ProductResponse {
 
-    private File productImage;
-    private String name;
-    private String description;
-    private String price;
+    private String productName;
     private String productId;
-
-//private ProductReview productReview;
-
+    private File productImage;
 }

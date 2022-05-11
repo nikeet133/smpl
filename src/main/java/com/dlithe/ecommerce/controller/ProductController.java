@@ -26,7 +26,7 @@ public class ProductController {
 
     @GetMapping("get-product-details/{productId}")
     public ResponseEntity<BaseResponse> fetchProductDetails(@PathVariable int productId) throws IOException {
-        if(productId  == 0){
+        if(productId  == 0 || String.valueOf(productId)==null){
             BaseResponse baseResponse = new BaseResponse();
             baseResponse.setMessage("not found");
             baseResponse.setHttpStatus(HttpStatus.BAD_REQUEST);
@@ -37,6 +37,32 @@ public class ProductController {
 
         return productService.getProductDetails(productId);
     }
+
+//    @GetMapping("get-main-product")
+//    public  ResponseEntity<BaseResponse>  getMainProductList(){
+//
+//        return productService.getMainProduct();
+//    }
+
+
+
+//    @GetMapping("get-product-detail/{productId}")
+//
+//    public ResponseEntity<BaseResponse> getProductList(@PathVariable int productId){
+//
+//        if(productId  == 0 || String.valueOf(productId)==null){
+//            BaseResponse baseResponse = new BaseResponse();
+//            baseResponse.setMessage("not found");
+//            baseResponse.setHttpStatus(HttpStatus.BAD_REQUEST);
+//            baseResponse.setHttpStatusCode(HttpStatus.BAD_REQUEST.value());
+//            return new ResponseEntity<>(baseResponse, HttpStatus.BAD_REQUEST);
+//        }
+//
+//
+//        return productService.getProductDetails(productId);
+//    }
+
+
 
 
 //    public ResponseEntity<BaseResponse> adminLogin(@RequestBody AdminLoginRequest adminLoginRequest){

@@ -1,9 +1,7 @@
 package com.dlithe.ecommerce.serviceImpl;
 
 
-import com.dlithe.ecommerce.dto.BaseResponse;
-import com.dlithe.ecommerce.dto.ProductDetails;
-import com.dlithe.ecommerce.dto.ProductReview;
+import com.dlithe.ecommerce.dto.*;
 import com.dlithe.ecommerce.entity.Products;
 import com.dlithe.ecommerce.repository.ProductsDAO;
 import com.dlithe.ecommerce.service.ProductService;
@@ -16,7 +14,8 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Optional;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -27,33 +26,59 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ResponseEntity<BaseResponse> getProductDetails(int productId) throws IOException {
-
-        Optional<Products> products=productsDAO.findById(productId);
-
-        Products product=products.get();
         BaseResponse baseResponse = new BaseResponse();
-        ProductDetails productDetails =new ProductDetails();
-        productDetails.setName(product.getProductName());
-        productDetails.setPrice(product.getPrice());
-        productDetails.setDescription(product.getProductDescription());
+        ProductDatailsResponseDTO productDatailsResponseDTO=new ProductDatailsResponseDTO();
+        List<Products> products=productsDAO.findByProductId(productId);
+        List<ProductDetails> productDetailsList=new ArrayList<>();
+//        Products product=products.get();
+        for(Products product:products) {
 
-        ProductReview productReview=new ProductReview();
-        productReview.setReview("that is good quality and smoothness ");
-        productReview.setName("nik");
-        productReview.setRating("4.5");
+            ProductDetails productDetails = new ProductDetails();
+            productDetails.setName(product.getProductName());
+            productDetails.setPrice(product.getPrice());
+            productDetails.setProductId(product.getProductId());
+            productDetails.setDescription(product.getProductDescription());
 
-        File file = new File("product-images/" + product.getImage());
-        Resource fileSystemResource = new FileSystemResource(file);
-        productDetails.setProductImage(fileSystemResource.getFile());
-        productDetails.setProductReview(productReview);
-
-        baseResponse.setMessage("Successfully added");
+            File file = new File("product-images/" + product.getImage());
+            Resource fileSystemResource = new FileSystemResource(file);
+            productDetails.setProductImage(fileSystemResource.getFile());
+            productDetailsList.add(productDetails);
+//        productDetails.setProductReview(productReview);
+        }
+        productDatailsResponseDTO.setProductDetails(productDetailsList);
+        baseResponse.setMessage("Product Fetched Successfully");
         baseResponse.setHttpStatus(HttpStatus.OK);
         baseResponse.setHttpStatusCode(HttpStatus.OK.value());
-        baseResponse.setResponse(productDetails);
+        baseResponse.setResponse(productDatailsResponseDTO);
 
-        return new ResponseEntity<BaseResponse>(baseResponse, HttpStatus.OK );
+        return new ResponseEntity<>(baseResponse, HttpStatus.OK );
     }
+
+//    @Override
+//    public ResponseEntity<BaseResponse> getMainProduct() {
+//
+//        BaseResponse baseResponse = new BaseResponse();
+//        ProductListResponse productListResponse=new ProductListResponse();
+//        List<Products> products =productsDAO.mainProductList();
+//        List<ProductResponse> productResponses = new ArrayList<>();
+//        for(Products product :products){
+//            ProductResponse productResponse =  new ProductResponse();
+//            productResponse.setProductId(product.getProductId());
+//            productResponse.setProductImage(new File(product.getImage()));
+//            productResponse.setProductName(product.getProductName());
+//
+//            productResponses.add(productResponse);
+//        }
+//        productListResponse.setProductResponses(productResponses);
+//        baseResponse.setMessage("main product Fetched");
+//        baseResponse.setHttpStatus(HttpStatus.OK);
+//        baseResponse.setHttpStatusCode(HttpStatus.OK.value());
+//        baseResponse.setResponse(productListResponse);
+//        return new ResponseEntity<>(baseResponse, HttpStatus.OK);
+//    }
+//
+
+
 
 
 

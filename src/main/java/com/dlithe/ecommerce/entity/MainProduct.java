@@ -1,6 +1,5 @@
 package com.dlithe.ecommerce.entity;
 
-
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -11,22 +10,16 @@ import javax.persistence.*;
 @Setter
 @ToString
 @Entity
-@Table(name="products")
-public class Products {
+@Table(name="main_product")
+public class MainProduct {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="id")
     private int id;
 
-    @Column(name="product_name")
+    @Column(name="main_product_name")
     private String productName;
-
-    @Column(name="product_description")
-    private String productDescription;
-
-    @Column(name="price")
-    private String price;
 
     @Column(name="product_image")
     private String image;
