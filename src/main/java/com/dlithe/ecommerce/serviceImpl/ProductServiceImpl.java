@@ -2,7 +2,9 @@ package com.dlithe.ecommerce.serviceImpl;
 
 
 import com.dlithe.ecommerce.dto.*;
+import com.dlithe.ecommerce.entity.MainProduct;
 import com.dlithe.ecommerce.entity.Products;
+import com.dlithe.ecommerce.repository.MainProductDAO;
 import com.dlithe.ecommerce.repository.ProductsDAO;
 import com.dlithe.ecommerce.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,9 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     ProductsDAO productsDAO;
 
+    @Autowired
+    MainProductDAO mainProductDAO;
+
 
     @Override
     public ResponseEntity<BaseResponse> getProductDetails(int productId) throws IOException {
@@ -38,10 +43,11 @@ public class ProductServiceImpl implements ProductService {
             productDetails.setPrice(product.getPrice());
             productDetails.setProductId(product.getProductId());
             productDetails.setDescription(product.getProductDescription());
+            productDetails.setProductImage(product.getImage());
 
-            File file = new File("product-images/" + product.getImage());
-            Resource fileSystemResource = new FileSystemResource(file);
-            productDetails.setProductImage(fileSystemResource.getFile());
+//            File file = new File("product-images/" + product.getImage());
+//            Resource fileSystemResource = new FileSystemResource(file);
+//            productDetails.setProductImage(fileSystemResource.getFile());
             productDetailsList.add(productDetails);
 //        productDetails.setProductReview(productReview);
         }
@@ -54,29 +60,29 @@ public class ProductServiceImpl implements ProductService {
         return new ResponseEntity<>(baseResponse, HttpStatus.OK );
     }
 
-//    @Override
-//    public ResponseEntity<BaseResponse> getMainProduct() {
-//
-//        BaseResponse baseResponse = new BaseResponse();
-//        ProductListResponse productListResponse=new ProductListResponse();
-//        List<Products> products =productsDAO.mainProductList();
-//        List<ProductResponse> productResponses = new ArrayList<>();
-//        for(Products product :products){
-//            ProductResponse productResponse =  new ProductResponse();
-//            productResponse.setProductId(product.getProductId());
-//            productResponse.setProductImage(new File(product.getImage()));
-//            productResponse.setProductName(product.getProductName());
-//
-//            productResponses.add(productResponse);
-//        }
-//        productListResponse.setProductResponses(productResponses);
-//        baseResponse.setMessage("main product Fetched");
-//        baseResponse.setHttpStatus(HttpStatus.OK);
-//        baseResponse.setHttpStatusCode(HttpStatus.OK.value());
-//        baseResponse.setResponse(productListResponse);
-//        return new ResponseEntity<>(baseResponse, HttpStatus.OK);
-//    }
-//
+    @Override
+    public ResponseEntity<BaseResponse> getMainProduct() {
+
+        BaseResponse baseResponse = new BaseResponse();
+        ProductListResponse productListResponse=new ProductListResponse();
+        List<MainProduct> mainProductList =mainProductDAO.mainProductList();
+        List<ProductResponse> productResponses = new ArrayList<>();
+        for(MainProduct mainProduct :mainProductList){
+            ProductResponse productResponse =  new ProductResponse();
+            productResponse.setId(mainProduct.getId());
+            productResponse.setMainProductImage(mainProduct.getImage());
+            productResponse.setMainProductName(mainProduct.getProductName());
+
+            productResponses.add(productResponse);
+        }
+        productListResponse.setProductResponses(productResponses);
+        baseResponse.setMessage("main product Fetched");
+        baseResponse.setHttpStatus(HttpStatus.OK);
+        baseResponse.setHttpStatusCode(HttpStatus.OK.value());
+        baseResponse.setResponse(productListResponse);
+        return new ResponseEntity<>(baseResponse, HttpStatus.OK);
+    }
+
 
 
 

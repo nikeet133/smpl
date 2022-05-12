@@ -12,8 +12,7 @@ import java.io.File;
 @EqualsAndHashCode
 @ToString
 public class ProductResponse {
-
-    private String productName;
-    private String productId;
-    private File productImage;
+    private int id;
+    private String mainProductName;
+    private String mainProductImage;
 }

@@ -4,25 +4,25 @@ import com.dlithe.ecommerce.dto.AdminLoginRequest;
 import com.dlithe.ecommerce.dto.BaseResponse;
 import com.dlithe.ecommerce.dto.ProductDetails;
 import com.dlithe.ecommerce.service.ProductService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
 
+
 import java.io.IOException;
 
 @RestController
+
+@Slf4j
+@CrossOrigin(origins ="*")
 public class ProductController {
 
      @Autowired
     private ProductService productService;
-//
-//    @GetMapping("get-product-List/{productId}")
-//    private ProductListRequest fetchTheProductList(@PathVariable int productId){
-//
-//        return productService.getProductList(productId);
-//    }
+
 
     @GetMapping("get-product-details/{productId}")
     public ResponseEntity<BaseResponse> fetchProductDetails(@PathVariable int productId) throws IOException {
@@ -38,11 +38,39 @@ public class ProductController {
         return productService.getProductDetails(productId);
     }
 
-//    @GetMapping("get-main-product")
-//    public  ResponseEntity<BaseResponse>  getMainProductList(){
+    @GetMapping("get-main-product")
+    public  ResponseEntity<BaseResponse>  getMainProductList(){
+
+        return productService.getMainProduct();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //
+//    @GetMapping("get-product-List/{productId}")
+//    private ProductListRequest fetchTheProductList(@PathVariable int productId){
 //
-//        return productService.getMainProduct();
+//        return productService.getProductList(productId);
 //    }
+
+
+
+
+
+
+
 
 
 

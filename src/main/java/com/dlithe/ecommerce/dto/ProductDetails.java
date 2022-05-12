@@ -15,7 +15,7 @@ import java.io.File;
 @ToString
 public class ProductDetails {
 
-    private File productImage;
+    private String productImage;
     private String name;
     private String description;
     private String price;

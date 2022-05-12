@@ -21,10 +21,8 @@ public class MainProduct {
     @Column(name="main_product_name")
     private String productName;
 
-    @Column(name="product_image")
+    @Column(name="main_product_image")
     private String image;
 
-    @Column(name="product_id")
-    private String productId;
 
 }

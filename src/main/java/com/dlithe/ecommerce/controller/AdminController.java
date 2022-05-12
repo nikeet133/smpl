@@ -24,7 +24,7 @@ public class AdminController {
     public ResponseEntity<BaseResponse> adminRegistration(@RequestBody AdminRegisterRequest adminRegisterRequest) {
         if (adminRegisterRequest == null) {
             BaseResponse baseResponse = new BaseResponse();
-            baseResponse.setMessage("Credentials Should not be null");
+            baseResponse.setMessage("customer detail should be register or not");
             baseResponse.setHttpStatus(HttpStatus.BAD_REQUEST);
             baseResponse.setHttpStatusCode(HttpStatus.BAD_REQUEST.value());
 
@@ -40,7 +40,7 @@ public class AdminController {
     public ResponseEntity<BaseResponse> adminLogin(@RequestBody AdminLoginRequest adminLoginRequest){
         if(adminLoginRequest  == null){
             BaseResponse baseResponse = new BaseResponse();
-            baseResponse.setMessage("not found");
+            baseResponse.setMessage("customer details should not be null");
             baseResponse.setHttpStatus(HttpStatus.BAD_REQUEST);
             baseResponse.setHttpStatusCode(HttpStatus.BAD_REQUEST.value());
             return new ResponseEntity<>(baseResponse, HttpStatus.BAD_REQUEST);
